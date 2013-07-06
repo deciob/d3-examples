@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "d3": "latest",
-    "when": "latest"
+    "d3": "latest"
   }
 }
