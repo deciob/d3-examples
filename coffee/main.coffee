@@ -1,3 +1,5 @@
+# based on: http://bl.ocks.org/mbostock/3883245
+
 margin =
   top: 20
   right: 20
