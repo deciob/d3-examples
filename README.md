@@ -1,12 +1,13 @@
 d3-examples
 ===========
 
-## Line Graph with Ticks
+### Line Graph with Ticks
 
 ```sh
 npm install -g bower
 npm install -g jitter
 
+# for installing js dependencies
 bower install
 
 # for compiling coffeescript
