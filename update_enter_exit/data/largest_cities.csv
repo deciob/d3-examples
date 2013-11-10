@@ -1,0 +1,21 @@
+year,rank,country,agglomeration,population
+1950,1,United States of America,New York,12.34
+1950,2,Japan,Tokyo,11.27
+1950,3,United Kingdom,London,8.36
+1950,4,France,Paris,6.28
+1950,5,Russian Federation,Moskva,5.36
+1950,6,Argentina,Buenos Aires,5.10
+1950,7,United States of America,Chicago,5.00
+1950,8,India,Kolkata,4.51
+1950,9,China,Shanghai,4.30
+1950,10,Japan,Osaka-Kobe,4.15
+2011,1,Japan,Tokyo,37.22
+2011,2,India,Delhi,22.65
+2011,3,Mexico,Ciudad de México,20.45
+2011,4,United States of America,New York,20.35
+2011,5,China,Shanghai,20.21
+2011,6,Brazil,São Paulo,19.92
+2011,7,India,Mumbai,19.74
+2011,8,China,Beijing,15.59
+2011,9,Bangladesh,Dhaka,15.39
+2011,10,India,Kolkata,14.40

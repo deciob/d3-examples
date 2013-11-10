@@ -1,5 +1,8 @@
 {
+  "name": "d3-examples",
+  "version": "0.0.1",
   "dependencies": {
-    "d3": "latest"
+    "d3": "latest",
+    "lodash": "latest"
   }
 }

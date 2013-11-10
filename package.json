@@ -1,0 +1,36 @@
+{
+  "name": "d3-examples",
+  "version": "0.0.1",
+  "description": "d3 examples.",
+  "keywords": ["d3"],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/deciob/d3-examples"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Decio Battaglia",
+      "web": "https://github.com/deciob"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "serv": "",
+    "bower": ""
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "serv --port 8000"
+  },
+  "ignore": [
+    "lib/"
+  ]
+}
