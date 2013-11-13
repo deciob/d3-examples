@@ -52,7 +52,7 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
     current_year += 5;
     draw(data_by_year[current_year]);
   });
-  console.log(data_by_year[current_year])
+  //console.log(data_by_year[current_year])
   draw(data_by_year[current_year]);
 
   function agglomeration(d) {
@@ -64,7 +64,7 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
       document.getElementById('year-label').innerHTML = current_year;
       current_year += 5;
       if (data_by_year[current_year]) {
-        setTimeout(function(){draw(data_by_year[current_year]);},500);
+        setTimeout(function(){draw(data_by_year[current_year]);},1000);
       }
     }
   }
@@ -74,8 +74,15 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
   }
 
   function draw(data) {
+    var duration = 2500;
     x.domain(data.map(function(d) { return d.agglomeration; }));
-    xAxisDom.transition().duration(600).call(xAxis).selectAll("text")
+    console.log(xAxisDom)
+    xAxisDom.transition()
+      .duration(duration)
+      .delay(function(d, i) { 
+        //console.log(d, i, i / 30 * duration)
+        return i / 30 * duration; })
+      .call(xAxis).selectAll("text")
       .attr("y", 0)
       .attr("x", 9)
       .attr("dy", ".35em")
@@ -93,13 +100,23 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
       .attr("height", function(d) { return 0; })
       .on("click", listener);
     bars.transition()
-      .duration(600)
+      .duration(duration)
+      .delay(function(d, i) { 
+        //console.log(d, i, i / 30 * duration)
+
+
+        return d.rank / 30 * duration; })
       .attr("x", function(d, i) { return x(d.agglomeration); })
       .attr("y", function(d) { return y(d.population); })
       .attr("height", function(d) { 
         return height - y(d.population); })
       .each("end", transEnd);
-    bars.exit().remove();
+    bars.exit()
+    .transition()
+    .duration(duration)
+    .attr("y", function(d) { return height; })
+    .attr("height", function(d) { return 0; })
+    .remove();
   }
   
 });
