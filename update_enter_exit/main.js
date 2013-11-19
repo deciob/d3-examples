@@ -1,11 +1,11 @@
-var margin = {top: 20, right: 20, bottom: 160, left: 40},
+var margin = {top: 20, right: 20, bottom: 160, left: 20},
     width = 960 - margin.left - margin.right,
     height = 650 - margin.top - margin.bottom;
 
 var formatPercent = d3.format(".0%");
 
 var x = d3.scale.ordinal()
-    .rangeRoundBands([11, width], .1);
+    .rangeRoundBands([0, width], .1);
 
 var y = d3.scale.linear()
     .range([height, 0]);
@@ -35,7 +35,8 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
   
   var xAxisDom = svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")");
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
 
   svg.append("g")
       .attr("class", "y axis")
@@ -64,7 +65,7 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
       document.getElementById('year-label').innerHTML = current_year;
       current_year += 5;
       if (data_by_year[current_year]) {
-        setTimeout(function(){draw(data_by_year[current_year]);},1000);
+        setTimeout(function(){draw(data_by_year[current_year]);},400);
       }
     }
   }
@@ -74,20 +75,32 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
   }
 
   function draw(data) {
-    var duration = 2500;
+
+    var duration = 2000;
+    var transition = svg.transition().duration(2750),
+    delay = function(d, i) { 
+      console.log(d, i, 'xx');
+      return i * 50; 
+    };
     x.domain(data.map(function(d) { return d.agglomeration; }));
-    console.log(xAxisDom)
-    xAxisDom.transition()
+
+    //debugger;
+    //console.log(xAxisDom)
+    //xAxisDom.transition()
+    transition.selectAll('.x.axis')
+      .call(xAxis)
+      .selectAll("g")
       .duration(duration)
-      .delay(function(d, i) { 
-        //console.log(d, i, i / 30 * duration)
-        return i / 30 * duration; })
-      .call(xAxis).selectAll("text")
+        .delay(delay)
+
+    .selectAll("text")
+      .delay(delay)
       .attr("y", 0)
       .attr("x", 9)
       .attr("dy", ".35em")
       .attr("transform", "rotate(90)")
       .style("text-anchor", "start");
+
     var bars = svg.selectAll(".bar")
       .data(data, agglomeration);
     bars.enter().append("rect")
@@ -99,13 +112,10 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
       .attr("y", function(d) { return height; })
       .attr("height", function(d) { return 0; })
       .on("click", listener);
-    bars.transition()
+
+      transition.selectAll('.bar')
       .duration(duration)
-      .delay(function(d, i) { 
-        //console.log(d, i, i / 30 * duration)
-
-
-        return d.rank / 30 * duration; })
+      .delay(delay)
       .attr("x", function(d, i) { return x(d.agglomeration); })
       .attr("y", function(d) { return y(d.population); })
       .attr("height", function(d) { 
