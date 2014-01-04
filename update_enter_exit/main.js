@@ -79,7 +79,7 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
     var duration = 2000;
     var transition = svg.transition().duration(2750),
     delay = function(d, i) { 
-      console.log(d, i, 'xx');
+      //console.log(d, i, 'xx');
       return i * 50; 
     };
     x.domain(data.map(function(d) { return d.agglomeration; }));
@@ -90,11 +90,11 @@ d3.csv("data/WUP2011-F11a-30_Largest_Cities.csv", accessor	, function(error, dat
     transition.selectAll('.x.axis')
       .call(xAxis)
       .selectAll("g")
-      .duration(duration)
-        .delay(delay)
+      //.duration(duration)
+      //  .delay(delay)
 
     .selectAll("text")
-      .delay(delay)
+      //.delay(delay)
       .attr("y", 0)
       .attr("x", 9)
       .attr("dy", ".35em")
