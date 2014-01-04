@@ -5,26 +5,35 @@
 <style>
 
 circle {
-  fill: #f3f3f3;
-  stroke: #000;
-  stroke-width: 1.5px;
+  fill: #ffb95f;
+  stroke: #dfa253;
+  stroke-width: 1px;
+}
+
+.land {
+  fill: #dddddd;
 }
 
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
 <script>
 
 var margin = {top: 0, right: 0, bottom: 0, left: 0},
-    width = 1600 - margin.left - margin.right,
+    width = 1800 - margin.left - margin.right,
     height = 1100 - margin.top - margin.bottom,
     padding = 3;
 
-var projection = d3.geo.mercator()
+var projection = d3.geo.robinson()
     .scale(300)
     .translate([width / 2, height / 2])
     .precision(.1);
+
+var path = d3.geo.path()
+    .projection(projection);
 
 var radius = d3.scale.sqrt();
     //.domain([0, d3.max(valueById)])
@@ -50,9 +59,8 @@ function accessor(d) {
   };
 }
 
-d3.csv("data/world_country_centroids.csv", accessor, 
- function(error, countries) {
-  
+ready = function(error, countries, land) {
+
   var values = countries.map(function (o) { return o.population; });
   radius.domain([0, d3.max(values)]).range([0, 80]);
 
@@ -74,6 +82,12 @@ d3.csv("data/world_country_centroids.csv", accessor,
       .nodes(nodes)
       .on("tick", tick)
       .start();
+
+  var land = topojson.feature(land, land.objects.ne_50m_land);
+  svg.append("path")
+    .attr("class", "land")
+    .datum(land)
+    .attr("d", path);
 
   var node = svg.selectAll("circle")
       .data(nodes)
@@ -120,6 +134,11 @@ d3.csv("data/world_country_centroids.csv", accessor,
       });
     };
   }
-});
+
+}
+
+queue()
+  .defer(d3.csv, "data/world_country_centroids.csv", accessor)
+  .defer(d3.json, "data/land.json").await(ready);
 
 </script>
